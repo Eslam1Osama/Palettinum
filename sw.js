@@ -1,28 +1,28 @@
 // sw.js - Service Worker for offline caching and performance optimization
-const CACHE_NAME = 'palettinum-v1.0.11';
-const STATIC_CACHE = 'palettinum-static-v1.0.11';
-const DYNAMIC_CACHE = 'palettinum-dynamic-v1.0.11';
+const CACHE_NAME = 'palettinum-v1.0.15';
+const STATIC_CACHE = 'palettinum-static-v1.0.15';
+const DYNAMIC_CACHE = 'palettinum-dynamic-v1.0.15';
 
 const STATIC_ASSETS = [
     '/',
     '/index.html',
-    '/style.css?v=3.27',
-    '/main.js?v=3.27',
-    '/overrides/palettinum-mobile-consistency.css?v=3.27',
+    '/style.css?v=3.31',
+    '/main.js?v=3.31',
+    '/overrides/palettinum-mobile-consistency.css?v=3.31',
     '/components.js',
     '/palette.js',
     '/theme.js',
     '/ui.js',
     '/events.js',
-    '/cache-manager.js?v=3.27',
+    '/cache-manager.js?v=3.31',
     '/components/color-picker/colorPicker.js',
-    '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.27',
+    '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.31',
 
-    '/state-manager.js?v=3.27',
-    '/performance-monitor.js?v=3.27',
-    '/performance-polyfills.js?v=3.27',
-    '/responsive-panel-controller.js?v=3.27',
-    '/PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.27',
+    '/state-manager.js?v=3.31',
+    '/performance-monitor.js?v=3.31',
+    '/performance-polyfills.js?v=3.31',
+    '/responsive-panel-controller.js?v=3.31',
+    '/PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.31',
     '/offline.html',
 
     '/assets/logo_light.png',
@@ -67,7 +67,7 @@ self.addEventListener('activate', event => {
                     return Promise.all(
                         cacheNames.map(cacheName => {
                             // Delete ALL old cache versions to force fresh load
-                            if (!cacheName.includes('v1.0.11')) {
+                            if (!cacheName.includes('v1.0.15')) {
                                 console.log('Deleting old cache:', cacheName);
                                 return caches.delete(cacheName);
                             }
@@ -214,9 +214,9 @@ async function purgeModifiedAssets() {
 // Force cache invalidation for critical assets
 async function forceCacheInvalidation() {
     const criticalAssets = [
-        '/main.js?v=3.27',
-        '/style.css?v=3.27',
-        '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.27',
+        '/main.js?v=3.31',
+        '/style.css?v=3.31',
+        '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.31',
         '/index.html'
     ];
     
@@ -773,7 +773,7 @@ async function cleanupAllCaches() {
                     url.includes('index.html')) {
                     
                     // Delete all versions except current
-                    if (!url.includes('v=3.27') && !url.includes('v1.0.11')) {
+                    if (!url.includes('v=3.31') && !url.includes('v1.0.15')) {
                         console.log('Cleaning up old cached file:', url);
                         await cache.delete(request);
                     }

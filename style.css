@@ -5421,6 +5421,60 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
     }
 }
 
+/* Accessibility Dashboard Close Button - Eliminate Black Frame Flash */
+#a11y-dashboard-close {
+    /* Completely remove all focus styles that could cause black frame */
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    
+    /* Prevent any default browser focus styles */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-focus-ring-color: transparent;
+    -moz-outline: none;
+    
+    /* Smooth transitions without visual artifacts */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    
+    /* Ensure no visual artifacts on interaction */
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Remove any focus states that could cause black frame */
+#a11y-dashboard-close:focus,
+#a11y-dashboard-close:focus-visible,
+#a11y-dashboard-close:active,
+#a11y-dashboard-close:hover {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: none;
+}
+
+/* Dark theme specific adjustments */
+.dark-theme #a11y-dashboard-close:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Ensure SVG icon doesn't cause visual artifacts */
+#a11y-dashboard-close svg {
+    transition: none;
+    transform: none;
+}
+
+#a11y-dashboard-close:hover svg {
+    transform: none;
+}
+
+/* Prevent any animation or transition artifacts */
+#a11y-dashboard-close * {
+    transition: none !important;
+    animation: none !important;
+}
+
 /* Ensure modal remains perfectly centered and sized on all viewports */
 @media (max-width: 1024px) {
     .cw-modal-content {
@@ -8248,7 +8302,9 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
 
 .export-dropdown-menu {
     position: absolute;
-    top: 100%;
+    /* STATIC POSITIONING: Always appear above the button */
+    top: auto;
+    bottom: 100%;
     left: 0;
     z-index: 50;
     min-width: 12rem;
@@ -8261,23 +8317,26 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px) scale(0.95);
+    transform: translateY(10px) scale(0.95);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(8px);
+    /* Static margin for consistent spacing above button */
+    margin-bottom: 0.25rem;
+    margin-top: 0;
 }
 
-/* Prevent initial positioning flash during layout calculation */
+/* STATIC POSITIONING: Always above button - no dynamic calculation needed */
 .export-dropdown-menu:not(.dropdown-up):not(.dropdown-down):not(.dropdown-left):not(.dropdown-right) {
-    /* Default positioning - will be overridden by JavaScript */
-    top: 100%;
-    bottom: auto;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
+    /* Static positioning - always above button */
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 0.25rem;
     left: 0;
     right: auto;
 }
 
-/* Smart positioning classes */
+/* STATIC POSITIONING: Always above - dropdown-up class now redundant but kept for compatibility */
 .export-dropdown-menu.dropdown-up {
     top: auto;
     bottom: 100%;
@@ -8290,12 +8349,13 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
     transform: translateY(0);
 }
 
+/* STATIC POSITIONING: Force dropdown-down to also appear above for consistency */
 .export-dropdown-menu.dropdown-down {
-    top: 100%;
-    bottom: auto;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
-    transform: translateY(-10px);
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    transform: translateY(10px);
 }
 
 .export-dropdown-menu.dropdown-down:not(.hidden) {
@@ -8466,13 +8526,13 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
         font-size: 0.8125rem;
     }
     
-    /* Mobile-specific positioning adjustments */
+    /* STATIC POSITIONING: Mobile adjustments - always above */
     .export-dropdown-menu.dropdown-up {
         margin-bottom: 0.5rem;
     }
     
     .export-dropdown-menu.dropdown-down {
-        margin-top: 0.5rem;
+        margin-bottom: 0.5rem; /* Changed from margin-top to margin-bottom for consistency */
     }
 }
 
@@ -8492,15 +8552,15 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
         height: 0.875rem;
     }
     
-    /* Enhanced mobile positioning */
+    /* STATIC POSITIONING: Enhanced mobile - always above */
     .export-dropdown-menu.dropdown-up {
         margin-bottom: 0.75rem;
         transform: translateY(15px);
     }
     
     .export-dropdown-menu.dropdown-down {
-        margin-top: 0.75rem;
-        transform: translateY(-15px);
+        margin-bottom: 0.75rem; /* Changed from margin-top to margin-bottom */
+        transform: translateY(15px); /* Changed from -15px to 15px for consistency */
     }
     
     .export-dropdown-menu.dropdown-up:not(.hidden) {

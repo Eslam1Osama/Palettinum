@@ -1175,13 +1175,11 @@ Technical Notes:
         const trigger = dropdownContainer.querySelector('.export-dropdown-trigger');
         const menu = dropdownContainer.querySelector('.export-dropdown-menu');
 
-        // Calculate initial optimal position based on layout
-        calculateInitialPosition();
+        // STATIC POSITIONING: Always position above button - no dynamic calculation needed
+        // Apply static positioning class immediately
+        menu.classList.add('dropdown-up');
         
-        // Also check position after a short delay to handle dynamic content loading
-        setTimeout(() => {
-            calculateInitialPosition();
-        }, 100);
+        // No need for dynamic positioning calculations
 
         // Setup event listeners
         const options = dropdownContainer.querySelectorAll('.export-option');
@@ -1260,9 +1258,7 @@ Technical Notes:
         }
 
         function openDropdown() {
-            // Calculate optimal position before showing
-            calculateOptimalPosition();
-            
+            // STATIC POSITIONING: No position calculation needed - dropdown always appears above
             menu.classList.remove('hidden');
             menu.classList.add('show');
             trigger.setAttribute('aria-expanded', 'true');
@@ -1276,179 +1272,14 @@ Technical Notes:
             trigger.querySelector('svg').style.transform = 'rotate(0deg)';
         }
 
-        /**
-         * Initial Layout-Aware Positioning
-         * Calculates optimal position during dropdown initialization
-         * Considers initial button position in page layout for better UX
-         */
-        function calculateInitialPosition() {
-            // Wait for next frame to ensure DOM is fully rendered
-            requestAnimationFrame(() => {
-                // Reset positioning classes
-                menu.classList.remove('dropdown-up', 'dropdown-down', 'dropdown-left', 'dropdown-right');
-                
-                // Get button and viewport dimensions
-                const triggerRect = trigger.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
-                const viewportWidth = window.innerWidth;
-                
-                // Calculate available space
-                const spaceBelow = viewportHeight - triggerRect.bottom;
-                const spaceAbove = triggerRect.top;
-                const spaceRight = viewportWidth - triggerRect.left;
-                const spaceLeft = triggerRect.left;
-                
-                // Estimate dropdown dimensions (5 options + padding)
-                const estimatedDropdownHeight = 220; // Approximate height for 5 options
-                const estimatedDropdownWidth = 192; // 12rem = 192px
-                
-                // Enhanced layout awareness: Check if button is in bottom half of viewport
-                const isInBottomHalf = triggerRect.top > (viewportHeight / 2);
-                const isNearBottom = spaceBelow < (estimatedDropdownHeight + 50); // 50px buffer
-                const isNearTop = spaceAbove < (estimatedDropdownHeight + 50);
-                
-                // Determine vertical positioning based on initial layout and position
-                let verticalPosition = 'down';
-                
-                // If button is in bottom half of viewport, prefer upward positioning
-                if (isInBottomHalf && spaceAbove > estimatedDropdownHeight) {
-                    verticalPosition = 'up';
-                }
-                // If insufficient space below and sufficient space above
-                else if (spaceBelow < estimatedDropdownHeight && spaceAbove > estimatedDropdownHeight) {
-                    verticalPosition = 'up';
-                }
-                // If near bottom edge, prefer upward positioning
-                else if (isNearBottom && !isNearTop) {
-                    verticalPosition = 'up';
-                }
-                // If not enough space above or below, choose the larger space
-                else if (spaceBelow < estimatedDropdownHeight && spaceAbove < estimatedDropdownHeight) {
-                    verticalPosition = spaceAbove > spaceBelow ? 'up' : 'down';
-                }
-                
-                // Determine horizontal positioning based on initial layout
-                let horizontalPosition = 'left';
-                if (spaceRight < estimatedDropdownWidth && spaceLeft > estimatedDropdownWidth) {
-                    horizontalPosition = 'right';
-                } else if (spaceRight < estimatedDropdownWidth && spaceLeft < estimatedDropdownWidth) {
-                    // Not enough space on either side, choose the larger space
-                    horizontalPosition = spaceLeft > spaceRight ? 'right' : 'left';
-                }
-                
-                // Apply positioning classes immediately
-                menu.classList.add(`dropdown-${verticalPosition}`);
-                menu.classList.add(`dropdown-${horizontalPosition}`);
-                
-                // Update ARIA labels for screen readers
-                const positionDescription = `${verticalPosition} and ${horizontalPosition}`;
-                menu.setAttribute('aria-label', `Export options menu (positioned ${positionDescription})`);
-            });
-        }
+        // STATIC POSITIONING: calculateInitialPosition function removed
+        // Dropdown will always appear above the button statically
 
-        /**
-         * Smart Dropdown Positioning System
-         * Calculates optimal position based on viewport space and button location
-         * Ensures dropdown is always fully visible to the user
-         * Enhanced for scrollable Color Palette Generator panel
-         */
-        function calculateOptimalPosition() {
-            // Skip calculation if menu is hidden
-            if (menu.classList.contains('hidden')) {
-                return;
-            }
-            
-            // Reset positioning classes
-            menu.classList.remove('dropdown-up', 'dropdown-down', 'dropdown-left', 'dropdown-right');
-            
-            // Get button and viewport dimensions
-            const triggerRect = trigger.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const viewportWidth = window.innerWidth;
-            const scrollY = window.scrollY;
-            const scrollX = window.scrollX;
-            
-            // Calculate available space
-            const spaceBelow = viewportHeight - triggerRect.bottom;
-            const spaceAbove = triggerRect.top;
-            const spaceRight = viewportWidth - triggerRect.left;
-            const spaceLeft = triggerRect.left;
-            
-            // Estimate dropdown dimensions (5 options + padding)
-            const estimatedDropdownHeight = 220; // Approximate height for 5 options
-            const estimatedDropdownWidth = 192; // 12rem = 192px
-            
-            // Enhanced positioning for scrollable panels
-            // Check if we're in the Color Palette Generator panel
-            const isInPaletteGenerator = trigger.closest('#palette-generator') !== null;
-            const paletteGenerator = document.getElementById('palette-generator');
-            
-            let effectiveSpaceBelow = spaceBelow;
-            let effectiveSpaceAbove = spaceAbove;
-            
-            if (isInPaletteGenerator && paletteGenerator) {
-                // Get the scrollable container bounds
-                const panelRect = paletteGenerator.getBoundingClientRect();
-                const panelSpaceBelow = panelRect.bottom - triggerRect.bottom;
-                const panelSpaceAbove = triggerRect.top - panelRect.top;
-                
-                // Use panel space for positioning instead of viewport
-                effectiveSpaceBelow = Math.min(panelSpaceBelow, viewportHeight - triggerRect.bottom);
-                effectiveSpaceAbove = Math.min(panelSpaceAbove, triggerRect.top);
-            }
-            
-            // Determine vertical positioning
-            let verticalPosition = 'down';
-            if (effectiveSpaceBelow < estimatedDropdownHeight && effectiveSpaceAbove > estimatedDropdownHeight) {
-                verticalPosition = 'up';
-            } else if (effectiveSpaceBelow < estimatedDropdownHeight && effectiveSpaceAbove < estimatedDropdownHeight) {
-                // Not enough space above or below, choose the larger space
-                verticalPosition = effectiveSpaceAbove > effectiveSpaceBelow ? 'up' : 'down';
-            }
-            
-            // Determine horizontal positioning
-            let horizontalPosition = 'left';
-            if (spaceRight < estimatedDropdownWidth && spaceLeft > estimatedDropdownWidth) {
-                horizontalPosition = 'right';
-            } else if (spaceRight < estimatedDropdownWidth && spaceLeft < estimatedDropdownWidth) {
-                // Not enough space on either side, choose the larger space
-                horizontalPosition = spaceLeft > spaceRight ? 'right' : 'left';
-            }
-            
-            // Apply positioning classes
-            menu.classList.add(`dropdown-${verticalPosition}`);
-            menu.classList.add(`dropdown-${horizontalPosition}`);
-            
-            // Update ARIA labels for screen readers
-            const positionDescription = `${verticalPosition} and ${horizontalPosition}`;
-            menu.setAttribute('aria-label', `Export options menu (positioned ${positionDescription})`);
-        }
+        // STATIC POSITIONING: calculateOptimalPosition function removed
+        // Dropdown will always appear above the button statically
 
-        // Handle window resize and scroll for dynamic repositioning
-        let resizeTimeout;
-        let scrollTimeout;
-        
-        const handleResize = () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                if (!menu.classList.contains('hidden')) {
-                    calculateOptimalPosition();
-                }
-            }, 100); // Debounce resize events
-        };
-        
-        const handleScroll = () => {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                if (!menu.classList.contains('hidden')) {
-                    calculateOptimalPosition();
-                }
-            }, 50); // Faster response for scroll events
-        };
-        
-        // Add event listeners for dynamic repositioning (viewport)
-        window.addEventListener('resize', handleResize);
-        window.addEventListener('scroll', handleScroll);
+        // STATIC POSITIONING: No dynamic repositioning needed
+        // Dropdown will always appear above the button statically
 
         // Reposition within scrollable containers (e.g., responsive panel)
         // Finds the nearest scrollable ancestor so the dropdown adapts while the panel scrolls
@@ -1474,27 +1305,13 @@ Technical Notes:
             scrollAncestor = document.getElementById('responsive-panel') || null;
         }
 
+        // STATIC POSITIONING: No scroll handlers needed
         let panelScrollHandler = null;
-        if (scrollAncestor && scrollAncestor.addEventListener) {
-            panelScrollHandler = () => {
-                if (!menu.classList.contains('hidden')) {
-                    calculateOptimalPosition();
-                }
-            };
-            scrollAncestor.addEventListener('scroll', panelScrollHandler, { passive: true });
-        }
 
-        // Store cleanup function
+        // Store cleanup function - simplified for static positioning
         dropdownContainer._cleanup = () => {
             document.removeEventListener('click', outsideClickHandler);
-            window.removeEventListener('resize', handleResize);
-            window.removeEventListener('scroll', handleScroll);
-            if (scrollAncestor && panelScrollHandler) {
-                try { scrollAncestor.removeEventListener('scroll', panelScrollHandler); } catch (_) {}
-                panelScrollHandler = null;
-            }
-            clearTimeout(resizeTimeout);
-            clearTimeout(scrollTimeout);
+            // No need to remove resize/scroll handlers as they were not added for static positioning
         };
 
         return dropdownContainer;

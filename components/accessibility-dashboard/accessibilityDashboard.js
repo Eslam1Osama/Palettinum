@@ -114,14 +114,35 @@ export class AccessibilityDashboard {
         // Render latest analysis
         this.render();
         
+        // CRITICAL: Reset scroll position to top immediately after rendering
+        // This prevents the scrollbar from jumping to middle when elements get focus
+        if (this.content) {
+            this.content.scrollTop = 0;
+            this.content.scrollLeft = 0;
+        }
         
         // Announce opening to screen readers
         this.announceToScreenReader('Accessibility Dashboard opened. Use Tab to navigate, Escape to close.');
         
-        // Focus first focusable element
-        if (this.focusableElements.length > 0) {
-            this.focusableElements[0].focus();
-        }
+        // Focus first focusable element (skip close button to prevent black frame)
+        // Use setTimeout to ensure scroll position is set before focus
+        setTimeout(() => {
+            if (this.focusableElements.length > 0) {
+                // Skip close button to prevent black frame flash
+                const firstFocusable = this.focusableElements.find(el => el.id !== 'a11y-dashboard-close');
+                if (firstFocusable) {
+                    firstFocusable.focus();
+                } else {
+                    // If only close button is focusable, focus the modal content instead
+                    this.content?.focus();
+                }
+            }
+            
+            // Double-check scroll position after focus to ensure it stays at top
+            if (this.content) {
+                this.content.scrollTop = 0;
+            }
+        }, 0);
     }
 
     close() {
@@ -156,6 +177,8 @@ export class AccessibilityDashboard {
         // If modal is open, live-update view
         if (this.modal && !this.modal.classList.contains('hidden')) {
             this.render();
+            // Reset scroll position after content update
+            this.resetScrollPosition();
         }
     }
 
@@ -236,6 +259,14 @@ export class AccessibilityDashboard {
         return results;
     }
     
+    // Scroll position management
+    resetScrollPosition() {
+        if (this.content) {
+            this.content.scrollTop = 0;
+            this.content.scrollLeft = 0;
+        }
+    }
+    
     // Accessibility helper methods
     getFocusableElements() {
         if (!this.modal) return [];
@@ -247,7 +278,10 @@ export class AccessibilityDashboard {
             'a[href]',
             '[tabindex]:not([tabindex="-1"])'
         ];
-        return Array.from(this.modal.querySelectorAll(focusableSelectors.join(', ')));
+        const allFocusable = Array.from(this.modal.querySelectorAll(focusableSelectors.join(', ')));
+        
+        // Exclude close button from automatic focus management to prevent black frame
+        return allFocusable.filter(el => el.id !== 'a11y-dashboard-close');
     }
     
     handleTabNavigation(e) {
@@ -465,6 +499,9 @@ export class AccessibilityDashboard {
         
         // Update focusable elements after render
         this.focusableElements = this.getFocusableElements();
+        
+        // Reset scroll position after content is rendered
+        this.resetScrollPosition();
         
         // Setup expandable table functionality
         this.setupExpandableTable();
