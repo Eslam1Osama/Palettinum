@@ -1,28 +1,28 @@
 // sw.js - Service Worker for offline caching and performance optimization
-const CACHE_NAME = 'palettinum-v1.0.10';
-const STATIC_CACHE = 'palettinum-static-v1.0.10';
-const DYNAMIC_CACHE = 'palettinum-dynamic-v1.0.10';
+const CACHE_NAME = 'palettinum-v1.0.11';
+const STATIC_CACHE = 'palettinum-static-v1.0.11';
+const DYNAMIC_CACHE = 'palettinum-dynamic-v1.0.11';
 
 const STATIC_ASSETS = [
     '/',
     '/index.html',
-    '/style.css?v=3.25',
-    '/main.js?v=3.26',
-    '/overrides/palettinum-mobile-consistency.css?v=3.25',
+    '/style.css?v=3.27',
+    '/main.js?v=3.27',
+    '/overrides/palettinum-mobile-consistency.css?v=3.27',
     '/components.js',
     '/palette.js',
     '/theme.js',
     '/ui.js',
     '/events.js',
-    '/cache-manager.js?v=3.25',
+    '/cache-manager.js?v=3.27',
     '/components/color-picker/colorPicker.js',
-    '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.25',
+    '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.27',
 
-    '/state-manager.js?v=3.25',
-    '/performance-monitor.js?v=3.25',
-    '/performance-polyfills.js?v=3.25',
-    '/responsive-panel-controller.js?v=3.25',
-    '/PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.25',
+    '/state-manager.js?v=3.27',
+    '/performance-monitor.js?v=3.27',
+    '/performance-polyfills.js?v=3.27',
+    '/responsive-panel-controller.js?v=3.27',
+    '/PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.27',
     '/offline.html',
 
     '/assets/logo_light.png',
@@ -61,12 +61,14 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
     event.waitUntil(
         Promise.all([
-            // Clean up old caches
+            // Clean up ALL old caches aggressively
             caches.keys()
                 .then(cacheNames => {
                     return Promise.all(
                         cacheNames.map(cacheName => {
-                            if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
+                            // Delete ALL old cache versions to force fresh load
+                            if (!cacheName.includes('v1.0.11')) {
+                                console.log('Deleting old cache:', cacheName);
                                 return caches.delete(cacheName);
                             }
                         })
@@ -75,7 +77,9 @@ self.addEventListener('activate', event => {
             // Purge modified assets
             purgeModifiedAssets(),
             // Force cache invalidation for critical assets
-            forceCacheInvalidation()
+            forceCacheInvalidation(),
+            // Comprehensive cache cleanup for PNG button removal
+            cleanupAllCaches()
         ])
     );
     
@@ -210,8 +214,9 @@ async function purgeModifiedAssets() {
 // Force cache invalidation for critical assets
 async function forceCacheInvalidation() {
     const criticalAssets = [
-        '/main.js?v=3.11',
-        '/style.css?v=3.8',
+        '/main.js?v=3.27',
+        '/style.css?v=3.27',
+        '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.27',
         '/index.html'
     ];
     
@@ -746,5 +751,38 @@ async function optimizeCacheSize() {
         }
         
 
+    }
+}
+
+// Comprehensive cache cleanup for PNG button removal
+async function cleanupAllCaches() {
+    try {
+        const cacheNames = await caches.keys();
+        
+        for (const cacheName of cacheNames) {
+            const cache = await caches.open(cacheName);
+            const requests = await cache.keys();
+            
+            for (const request of requests) {
+                const url = request.url;
+                
+                // Delete any cached versions of files that might contain PNG button
+                if (url.includes('accessibilityDashboard.js') || 
+                    url.includes('main.js') || 
+                    url.includes('style.css') ||
+                    url.includes('index.html')) {
+                    
+                    // Delete all versions except current
+                    if (!url.includes('v=3.27') && !url.includes('v1.0.11')) {
+                        console.log('Cleaning up old cached file:', url);
+                        await cache.delete(request);
+                    }
+                }
+            }
+        }
+        
+        console.log('Cache cleanup completed for PNG button removal');
+    } catch (error) {
+        console.error('Cache cleanup error:', error);
     }
 } 
