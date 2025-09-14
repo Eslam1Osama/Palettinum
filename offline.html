@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - Palettinum</title>
+    <meta name="description" content="You are offline. Palettinum is a professional color palette generator & visual editor. Try again when you're back online or open cached palettes.">
+    <link rel="icon" type="image/png" href="assets/logo_light.png">
+    <style>
+        body{font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; margin:0; padding:0; background:#0b1220; color:#e5e7eb; display:flex; align-items:center; justify-content:center; min-height:100vh}
+        .card{background:#111827; border:1px solid #1f2937; border-radius:12px; padding:24px; max-width:560px; margin:16px; text-align:center}
+        .logo{width:48px; height:48px; display:block; margin:0 auto 12px auto}
+        h1{font-size:20px; margin:8px 0 12px 0}
+        p{font-size:14px; line-height:1.6; color:#9ca3af}
+        .actions{margin-top:16px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+        .btn{appearance:none; border:1px solid #374151; background:#1f2937; color:#e5e7eb; padding:10px 14px; border-radius:8px; cursor:pointer}
+        .btn:hover{background:#273043}
+        a.btn{ text-decoration:none; }
+    </style>
+    <meta name="theme-color" content="#3dbdf5">
+    <meta name="robots" content="noindex">
+</head>
+<body>
+    <div class="card" role="dialog" aria-labelledby="offline-title" aria-describedby="offline-desc">
+        <img class="logo" src="assets/logo_light.png" alt="Palettinum" onerror="this.style.display='none'">
+        <h1 id="offline-title">Offline - Palettinum</h1>
+        <p id="offline-desc">You're currently offline. Palettinum helps you generate professional color palettes, analyze accessibility, and export in multiple formats. Please retry when your connection is restored.</p>
+        <div class="actions">
+            <button class="btn" onclick="location.reload()">Retry</button>
+            <a class="btn" href="/" rel="nofollow">Go Home</a>
+        </div>
+    </div>
+</body>
+</html>
+

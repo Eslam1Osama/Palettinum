@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Primary Meta Tags -->
+    <title>Palettinum - Professional Color Palette Generator & Visual Editor</title>
+    <meta name="title" content="Palettinum - Professional Color Palette Generator & Visual Editor">
+    <meta name="description" content="Create stunning color palettes with advanced harmony algorithms, accessibility analysis, and export to CSS, JSON, SVG, PNG, and Adobe ASE formats. Professional color tool for designers and developers.">
+    <meta name="keywords" content="color palette generator, color harmony, accessibility checker, color picker, design tools, CSS colors, Adobe ASE, color theory, WCAG compliance">
+    <meta name="author" content="EOPeak - EasOfTopia">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <link rel="canonical" href="https://palettinum.vercel.app/">
+    <meta name="theme-color" content="#3dbdf5">
+    <meta name="msapplication-TileColor" content="#3dbdf5">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://palettinum.vercel.app/">
+    <meta property="og:title" content="Palettinum - Professional Color Palette Generator & Visual Editor">
+    <meta property="og:description" content="Create stunning color palettes with advanced harmony algorithms, accessibility analysis, and export to CSS, JSON, SVG, PNG, and Adobe ASE formats. Professional color tool for designers and developers.">
+    <meta property="og:image" content="https://palettinum.vercel.app/assets/logo_light.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Palettinum - Professional Color Palette Generator">
+    <meta property="og:site_name" content="Palettinum">
+    <meta property="og:locale" content="en_US">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://palettinum.vercel.app/">
+    <meta property="twitter:title" content="Palettinum - Professional Color Palette Generator & Visual Editor">
+    <meta property="twitter:description" content="Create stunning color palettes with advanced harmony algorithms, accessibility analysis, and export to CSS, JSON, SVG, PNG, and Adobe ASE formats. Professional color tool for designers and developers.">
+    <meta property="twitter:image" content="https://palettinum.vercel.app/assets/logo_light.png">
+    <meta property="twitter:image:alt" content="Palettinum - Professional Color Palette Generator">
+    <meta property="twitter:creator" content="@EOPeak">
+    <meta property="twitter:site" content="@EOPeak">
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Palettinum - Professional Color Palette Generator",
+        "alternateName": "Palettinum",
+        "description": "Create stunning color palettes with advanced harmony algorithms, accessibility analysis, and export to CSS, JSON, SVG, PNG, and Adobe ASE formats. Professional color tool for designers and developers.",
+        "url": "https://palettinum.vercel.app/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "creator": { "@type": "Organization", "name": "EOPeak - EasOfTopia", "url": "https://palettinum.vercel.app/" },
+        "screenshot": "https://palettinum.vercel.app/assets/logo_light.png",
+        "featureList": [
+            "Color Palette Generation",
+            "Accessibility Analysis",
+            "WCAG Compliance Checking",
+            "Multiple Export Formats",
+            "Color Harmony Algorithms",
+            "Professional Design Tools"
+        ],
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "softwareVersion": "1.0.0"
+    }
+    </script>
+    <link rel="icon" type="image/png" href="assets/logo_light.png">
+    <link rel="apple-touch-icon" href="assets/logo_light.png">
+    <link rel="manifest" href="/manifest.json?v=3.15">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css?v=3.25">
+    <link rel="stylesheet" href="PALETTENIFFER_PLATFORM_NAVIGATION.css?v=3.25">
+    <link rel="stylesheet" href="overrides/palettinum-mobile-consistency.css?v=3.25">
+</head>
+<body class="bg-primary text-primary">
+    <!-- Platform Preloader -->
+    <div id="platform-preloader" class="platform-preloader">
+        <div class="preloader-logo">
+            <svg class="preloader-blocks" width="64" height="64" viewBox="0 0 64 64">
+                <rect class="block block1" x="4"  y="4"  width="16" height="16" rx="4"/>
+                <rect class="block block2" x="24" y="4"  width="16" height="16" rx="4"/>
+                <rect class="block block3" x="44" y="4"  width="16" height="16" rx="4"/>
+                <rect class="block block4" x="4"  y="24" width="16" height="16" rx="4"/>
+                <rect class="block block5" x="24" y="24" width="16" height="16" rx="4"/>
+                <rect class="block block6" x="44" y="24" width="16" height="16" rx="4"/>
+                <rect class="block block7" x="4"  y="44" width="16" height="16" rx="4"/>
+                <rect class="block block8" x="24" y="44" width="16" height="16" rx="4"/>
+                <rect class="block block9" x="44" y="44" width="16" height="16" rx="4"/>
+            </svg>
+                                            <span class="preloader-title">EasOfTopia</span>
+            </div>
+        </div>
+
+    <!-- Main Content (initially hidden) -->
+    <div id="main-content" class="main-content" style="display: none;">
+
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-secondary soft-shadow sticky top-0 z-50 w-full backdrop-blur flex-none transition-colors duration-500 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent optimize-render">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                            <div class="flex items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent/80 p-2 icon-fluid-md">
+                                <img src="assets/logo_light.png" alt="Palettinum Logo" class="object-contain logo-light icon-fluid-md" width="24" height="24" onerror="this.style.display='none'">
+                                <img src="assets/logo_dark.png" alt="Palettinum Logo" class="object-contain logo-dark hidden icon-fluid-md" width="24" height="24" onerror="this.style.display='none'">
+                            </div>
+                            <div class="flex flex-col">
+                                <h1 class="text-fluid-2xl font-bold text-primary">Palettinum</h1>
+                            </div>
+                        </div>
+                    <div class="nav-right flex items-center space-x-2">
+                        <button id="color-wheel-btn" class="p-2 rounded-lg text-white btn-fluid focus-fluid active-fluid" aria-label="Open Color Wheel">
+                            <svg class="icon-fluid-md" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <!-- Smart Color Wheel Icon - More Visible and Functional -->
+                                <!-- Main wheel circle -->
+                                <circle cx="12" cy="12" r="9" stroke-width="2.5" stroke="currentColor"/>
+                                <!-- Color segments for visual clarity -->
+                                <path d="M12 3 L12 6" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M12 18 L12 21" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M3 12 L6 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M18 12 L21 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <!-- Diagonal segments -->
+                                <path d="M5.5 5.5 L7.5 7.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M16.5 16.5 L18.5 18.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M18.5 5.5 L16.5 7.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M7.5 16.5 L5.5 18.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <!-- Center hub -->
+                                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                                <!-- Interactive handle/pointer -->
+                                <circle cx="12" cy="3" r="1.8" fill="currentColor"/>
+                                <!-- Small accent dots -->
+                                <circle cx="12" cy="21" r="0.8" fill="currentColor"/>
+                                <circle cx="21" cy="12" r="0.8" fill="currentColor"/>
+                                <circle cx="3" cy="12" r="0.8" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button id="theme-toggle" class="p-2 rounded-lg accent-bg text-white btn-fluid focus-fluid active-fluid" aria-label="Toggle theme" title="Toggle light/dark theme">
+                            <svg id="theme-icon-light" class="icon-fluid-md" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <svg id="theme-icon-dark" class="icon-fluid-md hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container-fluid mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Responsive Panel Toggle Button (hidden on xl+) -->
+            <button id="panel-toggle" class="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 accent-bg text-white p-3 rounded-lg shadow-lg smooth-transition xl:hidden btn-fluid" aria-label="Toggle controls panel">
+                <svg id="panel-toggle-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+
+            <!-- Responsive Controls Panel (hidden on xl+) -->
+            <div id="responsive-panel" class="fixed top-16 left-0 h-[calc(100vh-4rem)] w-[32rem] max-w-[98vw] bg-secondary z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out xl:hidden soft-shadow border-r border-color">
+                <div class="flex justify-between items-center p-4 border-b border-color">
+                    <h3 class="text-lg font-bold text-primary">Controls</h3>
+                    <button id="panel-close" class="p-2 rounded-full text-secondary hover:bg-primary smooth-transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="h-full overflow-y-auto p-6 space-y-8">
+                    <!-- Palette Generator Section -->
+                    <section id="panel-palette-generator" class="bg-secondary p-6 rounded-xl soft-shadow card-fluid animate-fluid-fade-in">
+                        <h2 class="text-fluid-xl font-bold text-primary mb-6 flex items-center">
+                            Color Palette Generator
+                            <button 
+                                class="popup-help-icon ml-2 flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                data-section-id="palette-generator"
+                                data-section-title="Color Palette Generator"
+                                aria-label="Learn about Color Palette Generator">
+                                <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </button>
+                        </h2>
+                        
+                        <!-- Seed Color -->
+                        <div class="mb-8">
+                            <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                Seed Color
+                                <button 
+                                    class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                    data-section-id="seed-color"
+                                    data-section-title="Seed Color Foundation"
+                                    aria-label="Learn about Seed Color">
+                                    <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </button>
+                            </h3>
+                            <div class="color-input-system flex flex-col sm:flex-row gap-3 mb-3">
+                                <div class="color-input-row flex items-center gap-3">
+                                    <div class="relative">
+                                        <input type="color" id="panel-seed-color" class="w-12 h-12 sm:w-10 sm:h-10 rounded-lg border-2 border-gray-300 dark:border-color cursor-pointer shadow-sm" value="#3dbdf5" title="Pick seed color">
+                                        <div class="absolute inset-0 rounded-lg pointer-events-none" style="background: linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.1) 50%)"></div>
+                                    </div>
+                                    <input type="text" id="panel-hex-input" placeholder="#3dbdf5" class="flex-1 min-w-0 px-3 py-2 border border-gray-300 dark:border-color rounded-md bg-white dark:bg-secondary text-gray-900 dark:text-primary focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-accent focus:border-blue-500 dark:focus:border-accent smooth-transition font-mono" maxlength="7">
+                                </div>
+                                <button id="panel-random-color" class="w-full sm:w-auto px-3 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-accent dark:hover:opacity-90 text-white rounded-md smooth-transition flex items-center justify-center gap-2 font-medium shadow-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                    Random
+                                </button>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-xs text-gray-600 dark:text-secondary font-medium">
+                                <span id="panel-color-info-rgb" class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-700 dark:text-gray-300 text-center sm:text-left">RGB: 61, 189, 245</span>
+                                <span class="text-gray-400 hidden sm:inline">•</span>
+                                <span id="panel-color-info-hsl" class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-700 dark:text-gray-300 text-center sm:text-left">HSL: 200°, 91%, 60%</span>
+                            </div>
+                        </div>
+
+                        <!-- Color Harmony -->
+                        <div class="mb-8">
+                            <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                Color Harmony
+                                <button 
+                                    class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                    data-section-id="color-harmony"
+                                    data-section-title="Color Harmony Theory"
+                                    aria-label="Learn about Color Harmony">
+                                    <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </button>
+                            </h3>
+                            <div class="form-control-row grid grid-cols-1 gap-4">
+                                <div class="flex items-center gap-3">
+                                    <label for="panel-harmony-rule" class="form-label text-secondary text-sm font-medium w-20">Harmony</label>
+                                    <select id="panel-harmony-rule" class="flex-1 px-3 py-2 border border-color rounded-md bg-secondary text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent smooth-transition">
+                                        <option value="analogic">Analogous</option>
+                                        <option value="monochrome">Monochromatic</option>
+                                        <option value="complement">Complementary</option>
+                                        <option value="analogic-complement">Analogous Complement</option>
+                                        <option value="triad">Triadic</option>
+                                        <option value="quad">Tetradic</option>
+                                        <option value="split-complement">Split Complementary</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <label for="panel-scheme-type" class="form-label text-secondary text-sm font-medium w-20">Scheme</label>
+                                    <select id="panel-scheme-type" class="flex-1 px-3 py-2 border border-color rounded-md bg-secondary text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent smooth-transition">
+                                        <option value="analogic">Analogic</option>
+                                        <option value="monochrome">Monochrome</option>
+                                        <option value="monochrome-dark">Monochrome Dark</option>
+                                        <option value="monochrome-light">Monochrome Light</option>
+                                        <option value="complement">Complement</option>
+                                        <option value="analogic-complement">Analogic Complement</option>
+                                        <option value="triad">Triad</option>
+                                        <option value="quad">Quad</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <label for="panel-num-results" class="form-label text-secondary text-sm font-medium w-20">Colors</label>
+                                    <div class="flex-1 relative">
+                                        <div class="custom-number-input flex items-center border border-color rounded-md bg-secondary overflow-hidden focus-within:ring-2 focus-within:ring-accent focus-within:border-accent smooth-transition">
+                                            <button type="button" class="custom-number-btn custom-number-btn-decrease flex items-center justify-center w-8 h-10 text-secondary hover:text-primary hover:bg-primary/10 focus:outline-none focus:text-primary focus:bg-primary/10 transition-all duration-200" aria-label="Decrease number">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                                                </svg>
+                                            </button>
+                                            <input id="panel-num-results" type="number" min="2" max="8" value="5" class="flex-1 px-3 py-2 bg-transparent text-primary text-center focus:outline-none border-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" readonly>
+                                            <button type="button" class="custom-number-btn custom-number-btn-increase flex items-center justify-center w-8 h-10 text-secondary hover:text-primary hover:bg-primary/10 focus:outline-none focus:text-primary focus:bg-primary/10 transition-all duration-200" aria-label="Increase number">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Color Adjustments -->
+                        <div class="mb-8">
+                            <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                Color Adjustments
+                                <button 
+                                    class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                    data-section-id="color-adjustments"
+                                    data-section-title="Precision Color Adjustments"
+                                    aria-label="Learn about Color Adjustments">
+                                    <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </button>
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <label for="panel-saturation-slider" class="text-secondary text-sm font-medium w-20">Saturation</label>
+                                    <input type="range" id="panel-saturation-slider" min="0" max="100" value="50" class="slider flex-1">
+                                    <span id="panel-saturation-value" class="slider-value w-12 text-center">50%</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <label for="panel-brightness-slider" class="text-secondary text-sm font-medium w-20">Brightness</label>
+                                    <input type="range" id="panel-brightness-slider" min="0" max="100" value="50" class="slider flex-1">
+                                    <span id="panel-brightness-value" class="slider-value w-12 text-center">50%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <div class="mb-6">
+                            <button id="panel-generate-btn" class="w-full accent-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 smooth-transition flex items-center justify-center gap-2">
+                                <span id="panel-generate-btn-text">Generate Palette</span>
+                                <div id="panel-generate-btn-loader" class="loader hidden"></div>
+                            </button>
+                        </div>
+
+                        <!-- Generated Palette -->
+                        <div class="mb-8">
+                            <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                Generated Palette
+                                <button 
+                                    class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                    data-section-id="generated-palette"
+                                    data-section-title="Generated Palette"
+                                    aria-label="Learn about Generated Palette">
+                                    <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </button>
+                            </h3>
+                                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-3">
+                                    <div id="panel-export-container" class="w-full sm:w-auto"></div>
+                                    <button id="panel-open-a11y" class="w-full sm:w-auto accent-bg text-white px-3 py-1 rounded text-sm font-medium hover:opacity-90 smooth-transition flex items-center justify-center">Accessibility Report</button>
+                                </div>
+                            <div id="panel-palette-display" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+                                <!-- Panel swatches will be injected here -->
+                            </div>
+                        </div>
+                    </section>
+
+
+                </div>
+            </div>
+
+            <!-- Panel Overlay (hidden on xl+) -->
+            <div id="panel-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[55] hidden xl:hidden"></div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-5 grid-fluid-lg">
+                <!-- Left Column: Controls (hidden on smaller screens) -->
+                <div class="xl:col-span-2 hidden xl:block">
+                    <div class="xl:sticky xl:top-24 h-[calc(100vh-6rem)] flex flex-col">
+                        <!-- Palette Generator -->
+                        <section id="palette-generator" class="bg-secondary p-8 rounded-xl soft-shadow card-fluid animate-fluid-fade-in flex-1 overflow-y-auto">
+                            <h2 class="text-fluid-xl font-bold text-primary mb-6 flex items-center">
+                                Color Palette Generator
+                                <button 
+                                    class="popup-help-icon ml-2 flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                    data-section-id="palette-generator"
+                                    data-section-title="Color Palette Generator"
+                                    aria-label="Learn about Color Palette Generator">
+                                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </button>
+                            </h2>
+                            
+                            <!-- Advanced Color Input System -->
+                            <div class="mb-8">
+                                <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                    Seed Color
+                                    <button 
+                                        class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                        data-section-id="seed-color"
+                                        data-section-title="Seed Color Controls"
+                                        aria-label="Learn about Seed Color">
+                                        <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </button>
+                                </h3>
+                                <div class="color-input-system flex flex-col sm:flex-row gap-3 mb-3">
+                                    <div class="color-input-row flex items-center gap-3">
+                                        <div class="relative">
+                                            <input type="color" id="seed-color" class="w-12 h-12 sm:w-10 sm:h-10 rounded-lg border-2 border-gray-300 dark:border-color cursor-pointer shadow-sm" value="#3dbdf5" title="Pick seed color">
+                                            <div class="absolute inset-0 rounded-lg pointer-events-none" style="background: linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.1) 50%)"></div>
+                                        </div>
+                                        <input type="text" id="hex-input" placeholder="#3dbdf5" class="flex-1 min-w-0 px-3 py-2 border border-gray-300 dark:border-color rounded-md bg-white dark:bg-secondary text-gray-900 dark:text-primary focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-accent focus:border-blue-500 dark:focus:border-accent smooth-transition font-mono" maxlength="7">
+                                    </div>
+                                    <button id="random-color" class="w-full sm:w-auto px-3 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-accent dark:hover:opacity-90 text-white rounded-md smooth-transition flex items-center justify-center gap-2 font-medium shadow-sm">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                        </svg>
+                                        Random
+                                    </button>
+                                </div>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-xs text-gray-600 dark:text-secondary font-medium">
+                                    <span id="color-info-rgb" class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-700 dark:text-gray-300 text-center sm:text-left">RGB: 61, 189, 245</span>
+                                    <span class="text-gray-400 hidden sm:inline">•</span>
+                                    <span id="color-info-hsl" class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-gray-700 dark:text-gray-300 text-center sm:text-left">HSL: 200°, 91%, 60%</span>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Color Theory Controls -->
+                            <div class="mb-8">
+                                <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                    Color Harmony
+                                    <button 
+                                        class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                        data-section-id="color-harmony"
+                                        data-section-title="Color Harmony Theory"
+                                        aria-label="Learn about Color Harmony">
+                                        <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </button>
+                                </h3>
+                                <div class="form-control-row grid grid-cols-1 gap-4">
+                                    <div class="flex items-center gap-2">
+                                        <label for="harmony-rule" class="form-label text-secondary text-sm font-medium">Harmony</label>
+                                        <select id="harmony-rule" class="flex-1 px-3 py-2 border border-color rounded-md bg-secondary text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent smooth-transition">
+                                            <option value="analogic">Analogous</option>
+                                            <option value="monochrome">Monochromatic</option>
+                                            <option value="complement">Complementary</option>
+                                            <option value="analogic-complement">Analogous Complement</option>
+                                            <option value="triad">Triadic</option>
+                                            <option value="quad">Tetradic</option>
+                                            <option value="split-complement">Split Complementary</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <label for="scheme-type" class="form-label text-secondary text-sm font-medium">Scheme</label>
+                                        <select id="scheme-type" class="flex-1 px-3 py-2 border border-color rounded-md bg-secondary text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent smooth-transition">
+                                            <option value="analogic">Analogic</option>
+                                            <option value="monochrome">Monochrome</option>
+                                            <option value="monochrome-dark">Monochrome Dark</option>
+                                            <option value="monochrome-light">Monochrome Light</option>
+                                            <option value="complement">Complement</option>
+                                            <option value="analogic-complement">Analogic Complement</option>
+                                            <option value="triad">Triad</option>
+                                            <option value="quad">Quad</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <label for="num-results" class="form-label text-secondary text-sm font-medium">Colors</label>
+                                        <div class="flex-1 relative">
+                                            <div class="custom-number-input flex items-center border border-color rounded-md bg-secondary overflow-hidden focus-within:ring-2 focus-within:ring-accent focus-within:border-accent smooth-transition">
+                                                <button type="button" class="custom-number-btn custom-number-btn-decrease flex items-center justify-center w-8 h-10 text-secondary hover:text-primary hover:bg-primary/10 focus:outline-none focus:text-primary focus:bg-primary/10 transition-all duration-200" aria-label="Decrease number">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                                                    </svg>
+                                                </button>
+                                                <input id="num-results" type="number" min="2" max="8" value="5" class="flex-1 px-3 py-2 bg-transparent text-primary text-center focus:outline-none border-none appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" readonly>
+                                                <button type="button" class="custom-number-btn custom-number-btn-increase flex items-center justify-center w-8 h-10 text-secondary hover:text-primary hover:bg-primary/10 focus:outline-none focus:text-primary focus:bg-primary/10 transition-all duration-200" aria-label="Increase number">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Color Adjustments -->
+                            <div class="mb-8">
+                                <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                    Color Adjustments
+                                    <button 
+                                        class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                        data-section-id="color-adjustments"
+                                        data-section-title="Color Adjustments"
+                                        aria-label="Learn about Color Adjustments">
+                                        <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </button>
+                                </h3>
+                                                                <div class="space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <label for="saturation-slider" class="text-secondary text-sm font-medium">Saturation</label>
+                                        <input type="range" id="saturation-slider" min="0" max="100" value="50" class="slider flex-1">
+                                        <span id="saturation-value" class="slider-value">50%</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <label for="brightness-slider" class="text-secondary text-sm font-medium">Brightness</label>
+                                        <input type="range" id="brightness-slider" min="0" max="100" value="50" class="slider flex-1">
+                                        <span id="brightness-value" class="slider-value">50%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Generate Button -->
+                            <div class="mb-6">
+                                <button id="generate-btn" class="w-full accent-bg text-white py-3 rounded-lg font-semibold hover:opacity-90 smooth-transition flex items-center justify-center gap-2">
+                                    <span id="generate-btn-text">Generate Palette</span>
+                                    <div id="generate-btn-loader" class="loader hidden"></div>
+                                </button>
+                            </div>
+
+                            <!-- Generated Palette -->
+                            <div class="mb-8">
+                                <h3 class="text-fluid-lg font-semibold text-primary mb-4 flex items-center">
+                                    Generated Palette
+                                    <button 
+                                        class="popup-help-icon ml-2 flex-shrink-0 w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                                        data-section-id="generated-palette"
+                                        data-section-title="Generated Palette"
+                                        aria-label="Learn about Generated Palette">
+                                        <svg class="w-3 h-3 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </button>
+                                </h3>
+                                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-3">
+                                    <div id="export-container" class="w-full sm:w-auto"></div>
+                                    <button id="open-a11y" class="w-full sm:w-auto accent-bg text-white px-3 py-1 rounded text-sm font-medium hover:opacity-90 smooth-transition flex items-center justify-center">Accessibility Report</button>
+                                </div>
+                                <div id="palette-display" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2">
+                                    <!-- Enhanced swatches will be injected here -->
+                                </div>
+                            </div>
+                        </section>
+                        
+
+                    </div>
+                </div>
+
+                <!-- Right Column: Live Preview -->
+                <div class="xl:col-span-3 xl:col-span-3">
+                   <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
+                       <h2 class="text-fluid-xl font-bold text-primary flex items-center gap-3">
+                           Live Preview
+                           <button 
+                               class="popup-help-icon flex-shrink-0 w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+                               data-section-id="live-preview"
+                               data-section-title="Live Component Preview"
+                               aria-label="Learn about Live Preview">
+                               <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                               </svg>
+                           </button>
+                       </h2>
+                       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                           <div class="relative flex-1 sm:flex-none">
+                               <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                   <svg class="h-4 w-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                   </svg>
+                               </div>
+                               <input type="text" id="showcase-search" placeholder="Search components..." class="w-full sm:w-64 pl-9 pr-3 py-2 border border-color rounded-md bg-secondary text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent smooth-transition text-sm">
+                           </div>
+                           <button id="open-component-selector" class="w-full sm:w-auto accent-bg text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 smooth-transition flex items-center justify-center">Select Components</button>
+                       </div>
+                   </div>
+                    <div id="live-preview" class="bg-secondary p-6 sm:p-8 lg:p-10 rounded-xl soft-shadow border border-color h-[calc(100vh-12rem)] flex flex-col">
+                        <div id="showcase-section" class="flex-1 overflow-y-auto space-y-8 animate-fade-in rounded-xl pr-2">
+                            <!-- Selected components will be rendered here -->
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Popup Card Stack Container -->
+    <div id="popup-card-stack" class="popup-card-stack">
+        <!-- Popup cards will be dynamically inserted here -->
+    </div>
+    
+    <!-- Close All Popup Cards Button (only visible when cards are present) -->
+    <button id="popup-close-all" class="popup-close-all hidden">
+        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        Close All
+    </button>
+    
+    <!-- Component Selector Panel -->
+    <div id="component-selector-panel" class="fixed right-0 w-full max-w-lg bg-secondary z-[60] p-6 soft-shadow overflow-y-auto" style="top: var(--header-height, 4rem); height: calc(100vh - var(--header-height, 4rem));">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-primary">Select UI Components</h3>
+            <button id="close-component-selector" class="p-2 rounded-full text-secondary hover:bg-primary smooth-transition">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+        <div class="mb-4">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input type="text" id="component-search" placeholder="Search components..." class="w-full pl-10 pr-3 py-2 border border-color rounded-md bg-secondary text-primary placeholder-secondary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent smooth-transition">
+            </div>
+        </div>
+        <div id="component-list" class="space-y-2">
+            <!-- Checkboxes will be injected here -->
+        </div>
+    </div>
+    <div id="overlay" class="fixed bg-black bg-opacity-50 z-[55] hidden" style="top: var(--header-height, 4rem); left: 0; right: 0; bottom: 0;"></div>
+
+    <!-- Hover Card for Component Preview -->
+    <div id="hover-card" class="fixed z-[9999] bg-secondary border border-color rounded-lg shadow-xl p-4 max-w-sm opacity-0 pointer-events-none transition-all duration-200 transform scale-95">
+        <div class="flex items-start justify-between mb-3">
+            <h4 id="hover-card-title" class="font-semibold text-primary text-lg"></h4>
+            <div class="flex items-center space-x-2">
+                <span id="hover-card-status" class="px-2 py-1 rounded-full text-xs font-medium"></span>
+            </div>
+        </div>
+        <div id="hover-card-preview" class="mb-3 p-3 bg-primary rounded-md border border-color">
+            <!-- Component preview will be injected here -->
+        </div>
+        <div class="text-xs text-secondary">
+            <p id="hover-card-description"></p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-800"></div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="performance-polyfills.js?v=3.25"></script>
+    <script src="cache-manager.js?v=3.25"></script>
+    <script src="state-manager.js?v=3.25"></script>
+    <script src="performance-monitor.js?v=3.25"></script>
+    <script src="responsive-panel-controller.js?v=3.25"></script>
+
+    <script src="PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.25"></script>
+    <script type="module" src="main.js?v=3.26"></script>
+</body>
+</html>

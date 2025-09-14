@@ -1,0 +1,400 @@
+/**
+ * Palettinum Mobile Cross-Platform Consistency Fixes
+ * 
+ * Purpose: Ensure pixel-perfect rendering across Android/iOS browsers and WebViews
+ * Scope: Non-invasive, reversible fixes for mobile consistency issues
+ * Target: iOS Safari/WKWebView, Chrome Android, Samsung Internet, Firefox Android
+ * 
+ * CRITICAL: Remove user-scalable=no from viewport meta tag to restore accessibility
+ */
+
+/* ===== VIEWPORT & SAFE AREA FIXES ===== */
+
+/* Fix viewport height issues on mobile browsers */
+:root {
+    /* Dynamic viewport units for better mobile support */
+    --vh-actual: 1vh;
+    --vw-actual: 1vw;
+    
+    /* Safe area support for notched devices */
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-right: env(safe-area-inset-right, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-left: env(safe-area-inset-left, 0px);
+    
+    /* Mobile-specific touch interaction improvements */
+    --touch-target-min: 44px; /* WCAG AA minimum touch target */
+}
+
+/* Initialize viewport height calculation */
+@supports (height: 100dvh) {
+    :root {
+        --vh-actual: 1dvh; /* Dynamic viewport height when supported */
+    }
+}
+
+/* ===== BODY & HTML MOBILE FIXES ===== */
+
+html {
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+    /* Improve text rendering on mobile */
+    -webkit-text-size-adjust: 100%;
+    /* Prevent zoom on double-tap in iOS */
+    touch-action: manipulation;
+}
+
+body {
+    /* Fix overflow issues on mobile */
+    overflow-x: hidden;
+    /* Improve scroll performance on iOS */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent bounce scroll on iOS */
+    overscroll-behavior-y: none;
+    /* Improve touch responsiveness */
+    touch-action: manipulation;
+}
+
+/* ===== FIXED POSITIONING MOBILE FIXES ===== */
+
+/* Fix header positioning on mobile */
+header {
+    /* Ensure header stays fixed properly on mobile */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Add safe area padding for notched devices */
+    padding-top: var(--safe-area-inset-top);
+    /* Improve rendering performance */
+    will-change: transform;
+    backface-visibility: hidden;
+    /* Fix potential backdrop-filter issues on mobile */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+/* Fix responsive panel positioning */
+#responsive-panel {
+    /* Ensure proper positioning relative to header */
+    top: calc(var(--header-height, 4rem) + var(--safe-area-inset-top));
+    height: calc(100vh - var(--header-height, 4rem) - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+    /* Add safe area padding */
+    padding-left: var(--safe-area-inset-left);
+    /* Improve scroll performance */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent scroll bounce */
+    overscroll-behavior: none;
+}
+
+/* Fix overlay positioning */
+#panel-overlay,
+#overlay {
+    /* Ensure overlays cover safe areas */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* Fix potential z-index issues */
+    z-index: 55;
+}
+
+/* ===== MODAL & POPUP MOBILE FIXES ===== */
+
+/* Fix modal positioning and sizing */
+.popup-card {
+    /* Ensure modals don't exceed viewport */
+    max-height: calc(100vh - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 2rem);
+    max-width: calc(100vw - var(--safe-area-inset-left) - var(--safe-area-inset-right) - 2rem);
+    /* Center properly considering safe areas */
+    transform: translate(-50%, -50%);
+    /* Improve scroll performance */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix color wheel modal on mobile */
+#color-wheel-modal .max-w-6xl {
+    /* Respect safe areas */
+    max-width: calc(100vw - var(--safe-area-inset-left) - var(--safe-area-inset-right) - 1rem);
+    max-height: calc(100vh - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 1rem);
+    /* Center considering safe areas */
+    margin: 0.5rem;
+}
+
+/* Fix accessibility dashboard modal */
+#a11y-dashboard-modal {
+    /* Respect safe areas */
+    padding-top: var(--safe-area-inset-top);
+    padding-bottom: var(--safe-area-inset-bottom);
+    padding-left: var(--safe-area-inset-left);
+    padding-right: var(--safe-area-inset-right);
+}
+
+/* ===== TOUCH TARGET & INTERACTION FIXES ===== */
+
+/* Ensure minimum touch target sizes */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.component-selector-item label,
+.harmony-btn,
+.export-option {
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+    /* Improve touch responsiveness */
+    touch-action: manipulation;
+}
+
+/* Fix slider touch targets */
+.slider {
+    /* Increase touch area for sliders */
+    padding: 0.5rem 0;
+    touch-action: manipulation;
+}
+
+.slider::-webkit-slider-thumb {
+    /* Ensure thumb is large enough for touch */
+    width: var(--touch-target-min);
+    height: var(--touch-target-min);
+}
+
+.slider::-moz-range-thumb {
+    /* Ensure thumb is large enough for touch */
+    width: var(--touch-target-min);
+    height: var(--touch-target-min);
+}
+
+/* ===== KEYBOARD & INPUT FIXES ===== */
+
+/* Fix input focus issues on mobile */
+input,
+textarea,
+select {
+    /* Prevent zoom on focus in iOS */
+    font-size: 16px;
+    /* Improve touch responsiveness */
+    touch-action: manipulation;
+}
+
+/* Fix input positioning when keyboard appears */
+@media screen and (max-height: 600px) {
+    /* Adjust modals when keyboard is likely open */
+    .popup-card,
+    #color-wheel-modal .max-w-6xl {
+        max-height: 90vh;
+        transform: translate(-50%, -45%); /* Move slightly up */
+    }
+}
+
+/* ===== WEBKIT-SPECIFIC MOBILE FIXES ===== */
+
+/* Fix WebKit appearance issues */
+input[type="color"],
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Fix WebKit scroll behavior */
+.overflow-y-auto,
+#showcase-section,
+#component-list,
+.popup-card-content {
+    -webkit-overflow-scrolling: touch;
+    /* Prevent bounce scroll */
+    overscroll-behavior: none;
+}
+
+/* ===== HIGH DPI & ZOOM FIXES ===== */
+
+/* Improve rendering on high DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Ensure crisp rendering of borders and shadows */
+    .soft-shadow {
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    /* Improve button rendering */
+    .btn,
+    button {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Fix zoom and accessibility scaling */
+@media (prefers-reduced-motion: no-preference) {
+    /* Only apply animations when motion is allowed */
+    .smooth-transition {
+        transition: all 0.2s ease;
+    }
+}
+
+/* ===== ORIENTATION & LANDSCAPE FIXES ===== */
+
+/* Fix layout in landscape mode */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    /* Adjust header size in landscape */
+    header {
+        min-height: 3rem;
+        height: 3rem;
+    }
+    
+    /* Adjust responsive panel */
+    #responsive-panel {
+        top: calc(3rem + var(--safe-area-inset-top));
+        height: calc(100vh - 3rem - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+    }
+    
+    /* Adjust modals for landscape */
+    .popup-card,
+    #color-wheel-modal .max-w-6xl {
+        max-height: calc(100vh - var(--safe-area-inset-top) - var(--safe-area-inset-bottom) - 1rem);
+    }
+}
+
+/* ===== ANDROID-SPECIFIC FIXES ===== */
+
+/* Fix Android WebView issues */
+@media screen and (-webkit-min-device-pixel-ratio: 1) {
+    /* Fix potential rendering issues in Android WebView */
+    .bg-gradient-to-br,
+    .gradient-bg {
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+}
+
+/* ===== IOS-SPECIFIC FIXES ===== */
+
+/* Fix iOS Safari issues */
+@supports (-webkit-touch-callout: none) {
+    /* This targets iOS Safari specifically */
+    
+    /* Fix iOS scroll bounce */
+    body {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    /* Re-enable scroll for main content */
+    #app {
+        height: 100vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix iOS input zoom */
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* ===== SAMSUNG INTERNET FIXES ===== */
+
+/* Fix Samsung Internet specific issues */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    /* Improve font rendering on Samsung devices */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Optimize animations and transitions for mobile */
+@media (max-width: 768px) {
+    /* Reduce motion on mobile for better performance */
+    * {
+        animation-duration: 0.2s !important;
+        transition-duration: 0.2s !important;
+    }
+    
+    /* Optimize transforms */
+    .card-fluid,
+    .btn-fluid,
+    .component-selector-item {
+        will-change: transform;
+        backface-visibility: hidden;
+    }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+/* Improve focus visibility on mobile */
+@media (pointer: coarse) {
+    /* Larger focus outlines for touch devices */
+    button:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .component-selector-item:hover,
+    .btn:hover,
+    button:hover {
+        transform: none;
+    }
+}
+
+/* ===== CRITICAL BUG FIXES ===== */
+
+/* Fix viewport meta tag accessibility issue */
+/* IMPORTANT: This CSS cannot fix the user-scalable=no issue */
+/* The viewport meta tag in index.html must be updated to: */
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+
+/* Fix text selection issues on mobile */
+.user-select-none {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+}
+
+/* Ensure proper box-sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Fix potential memory leaks from animations */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== DEBUGGING AIDS (REMOVE IN PRODUCTION) ===== */
+
+/*
+.mobile-debug {
+    position: fixed;
+    top: var(--safe-area-inset-top);
+    right: var(--safe-area-inset-right);
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    font-size: 12px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.mobile-debug::after {
+    content: 'VH: ' attr(data-vh) ' | VW: ' attr(data-vw) ' | SAI: ' attr(data-sai);
+}
+*/
