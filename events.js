@@ -3,30 +3,49 @@ export function setupEventListeners({
     themeToggle, themeIconLight, themeIconDark, generateBtn, openComponentSelectorBtn, closeComponentSelectorBtn, overlay, componentList, componentSearch, numResultsInput, schemeTypeSelect, harmonyRuleSelect,
     toggleTheme, generatePaletteFromAPI, toggleComponentSelector, handleComponentSelection, filterComponents, showHoverCard, hideHoverCard, updatePalette, currentPalette
 }) {
-    // Optimized theme toggle with instant feedback
+    // Optimized theme toggle with instant feedback and enhanced validation
     if (themeToggle) {
         themeToggle.addEventListener('click', (e) => {
             // Prevent multiple rapid clicks
-            if (e.target.closest('#theme-toggle')?.dataset.processing === 'true') return;
+            const toggleElement = e.target.closest('#theme-toggle');
+            if (!toggleElement || toggleElement.dataset.processing === 'true') return;
+            
+            // Validate icon elements before proceeding
+            const hasValidIcons = (themeIconLight && themeIconDark && 
+                                 themeIconLight.id === 'theme-icon-light' && 
+                                 themeIconDark.id === 'theme-icon-dark');
             
             // Mark as processing
-            const toggleElement = e.target.closest('#theme-toggle');
-            if (toggleElement) {
-                toggleElement.dataset.processing = 'true';
-            }
+            toggleElement.dataset.processing = 'true';
             
             // Add transition class for smooth switching
             document.body.classList.add('theme-transitioning');
             
-            // Perform theme toggle with safe icon references
+            // Perform theme toggle with validated icon references
             const newTheme = toggleTheme(themeIconLight, themeIconDark);
             
             // Remove processing flag and transition class with minimal timing
             setTimeout(() => {
-                if (toggleElement) {
-                    toggleElement.dataset.processing = 'false';
-                }
+                toggleElement.dataset.processing = 'false';
                 document.body.classList.remove('theme-transitioning');
+                
+                // Validate icon state after toggle with correct UX logic
+                if (hasValidIcons) {
+                    // Icon logic: Show icon for the action user can take (next theme)
+                    // Light theme -> show moon icon (click to go dark)
+                    // Dark theme -> show sun icon (click to go light)
+                    const shouldShowMoonIcon = newTheme === 'light';
+                    const shouldShowSunIcon = newTheme === 'dark';
+                    
+                    // Apply correct icon visibility with smooth animations
+                    if (shouldShowMoonIcon) {
+                        themeIconLight.classList.add('hidden');
+                        themeIconDark.classList.remove('hidden');
+                    } else if (shouldShowSunIcon) {
+                        themeIconLight.classList.remove('hidden');
+                        themeIconDark.classList.add('hidden');
+                    }
+                }
             }, 50); // Minimal time for instant feedback
         });
     }

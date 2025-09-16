@@ -133,10 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let colorWheel = null;
     const hoverCardDescription = document.getElementById('hover-card-description');
 
-    // Ensure header logo fallback if images fail
+    // Ensure header logo fallback if images fail and setup reload functionality
     (function ensureLogoFallback() {
         try {
-            const container = document.querySelector('header .bg-gradient-to-br');
+            const container = document.querySelector('header .bg-gradient-to-br') || document.querySelector('#header-logo-reload');
             if (!container) return;
             const imgs = container.querySelectorAll('img');
             const hasVisible = () => Array.from(imgs).some(img => img.complete && img.naturalWidth > 0 && img.style.display !== 'none');
@@ -160,6 +160,46 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (_) {}
     })();
 
+    // Initialize header logo reload functionality
+    (function initializeHeaderLogoReload() {
+        try {
+            const logoButton = document.getElementById('header-logo-reload');
+            if (!logoButton) return;
+
+            // Reload function without visual feedback
+            const handleReload = () => {
+                try {
+                    // Direct reload without any visual effects
+                    window.location.reload();
+                } catch (error) {
+                    console.warn('Header logo reload failed:', error);
+                    // Fallback: direct reload
+                    window.location.reload();
+                }
+            };
+
+            // Click handler
+            logoButton.addEventListener('click', handleReload);
+
+            // Keyboard handler (Enter and Space)
+            logoButton.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleReload();
+                }
+            });
+
+            // Touch handler for mobile devices
+            logoButton.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                handleReload();
+            });
+
+        } catch (error) {
+            console.warn('Header logo reload initialization failed:', error);
+        }
+    })();
+
     // --- State ---
     let currentPalette = [];
     let selectedComponents = ['Navbar', 'Buttons', 'Card'];
@@ -178,6 +218,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Apply theme with optimized manager
             applyTheme(theme, themeIconLight, themeIconDark);
             
+            // Ensure proper icon state after theme application with UX logic
+            if (themeIconLight && themeIconDark) {
+                // Icon logic: Show icon for the action user can take (next theme)
+                // Light theme -> show moon icon (click to go dark)
+                // Dark theme -> show sun icon (click to go light)
+                if (theme === 'light') {
+                    themeIconLight.classList.add('hidden');
+                    themeIconDark.classList.remove('hidden');
+                } else {
+                    themeIconLight.classList.remove('hidden');
+                    themeIconDark.classList.add('hidden');
+                }
+            }
+            
             // Remove transition class after minimal delay for instant rendering
             setTimeout(() => {
                 document.body.classList.remove('theme-transitioning');
@@ -188,6 +242,20 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 document.body.className = document.body.className.replace(/light-theme|dark-theme/g, '').trim();
                 document.body.className += ' ' + theme + '-theme';
+                
+                // Fallback icon state with UX logic
+                if (themeIconLight && themeIconDark) {
+                    // Icon logic: Show icon for the action user can take (next theme)
+                    // Light theme -> show moon icon (click to go dark)
+                    // Dark theme -> show sun icon (click to go light)
+                    if (theme === 'light') {
+                        themeIconLight.classList.add('hidden');
+                        themeIconDark.classList.remove('hidden');
+                    } else {
+                        themeIconLight.classList.remove('hidden');
+                        themeIconDark.classList.add('hidden');
+                    }
+                }
             } catch (fallbackError) {
                 // Silent error handling for production
             }

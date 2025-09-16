@@ -1,28 +1,28 @@
 // sw.js - Service Worker for offline caching and performance optimization
-const CACHE_NAME = 'palettinum-v1.0.15';
-const STATIC_CACHE = 'palettinum-static-v1.0.15';
-const DYNAMIC_CACHE = 'palettinum-dynamic-v1.0.15';
+const CACHE_NAME = 'palettinum-v1.0.21';
+const STATIC_CACHE = 'palettinum-static-v1.0.21';
+const DYNAMIC_CACHE = 'palettinum-dynamic-v1.0.21';
 
 const STATIC_ASSETS = [
     '/',
     '/index.html',
-    '/style.css?v=3.31',
-    '/main.js?v=3.31',
-    '/overrides/palettinum-mobile-consistency.css?v=3.31',
+    '/style.css?v=3.37',
+    '/main.js?v=3.37',
+    '/overrides/palettinum-mobile-consistency.css?v=3.37',
     '/components.js',
     '/palette.js',
     '/theme.js',
     '/ui.js',
     '/events.js',
-    '/cache-manager.js?v=3.31',
+    '/cache-manager.js?v=3.37',
     '/components/color-picker/colorPicker.js',
-    '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.31',
+    '/components/accessibility-dashboard/accessibilityDashboard.js?v=3.37',
 
-    '/state-manager.js?v=3.31',
-    '/performance-monitor.js?v=3.31',
-    '/performance-polyfills.js?v=3.31',
-    '/responsive-panel-controller.js?v=3.31',
-    '/PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.31',
+    '/state-manager.js?v=3.37',
+    '/performance-monitor.js?v=3.37',
+    '/performance-polyfills.js?v=3.37',
+    '/responsive-panel-controller.js?v=3.37',
+    '/PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.37',
     '/offline.html',
 
     '/assets/logo_light.png',

@@ -113,7 +113,7 @@ export function optimizeThemeElements() {
     }
 }
 
-// Enhanced theme state validation
+// Enhanced theme state validation with icon verification
 export function validateThemeState() {
     try {
         const body = document.body;
@@ -130,11 +130,26 @@ export function validateThemeState() {
             body.classList.add(`${currentTheme}-theme`);
         }
         
-        // Validate theme toggle state
+        // Validate theme toggle state and icons
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
-            const svgs = themeToggle.querySelectorAll('svg');
-            // Validate theme toggle icons silently
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            
+            // Ensure correct icon visibility based on current theme with UX logic
+            if (lightIcon && darkIcon) {
+                // Icon logic: Show icon for the action user can take (next theme)
+                // Light theme -> show moon icon (click to go dark)
+                // Dark theme -> show sun icon (click to go light)
+                if (currentTheme === 'light') {
+                    lightIcon.classList.add('hidden');
+                    darkIcon.classList.remove('hidden');
+                } else {
+                    lightIcon.classList.remove('hidden');
+                    darkIcon.classList.add('hidden');
+                }
+            }
         }
         
         // Theme state validation completed silently

@@ -69,9 +69,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css?v=3.31">
-    <link rel="stylesheet" href="PALETTENIFFER_PLATFORM_NAVIGATION.css?v=3.31">
-    <link rel="stylesheet" href="overrides/palettinum-mobile-consistency.css?v=3.31">
+    <link rel="stylesheet" href="style.css?v=3.37">
+    <link rel="stylesheet" href="PALETTENIFFER_PLATFORM_NAVIGATION.css?v=3.37">
+    <link rel="stylesheet" href="overrides/palettinum-mobile-consistency.css?v=3.37">
 </head>
 <body class="bg-primary text-primary">
     <!-- Platform Preloader -->
@@ -100,11 +100,11 @@
         <header class="bg-secondary soft-shadow sticky top-0 z-50 w-full backdrop-blur flex-none transition-colors duration-500 lg:border-b lg:border-slate-900/10 dark:border-slate-50/[0.06] bg-white/95 supports-backdrop-blur:bg-white/60 dark:bg-transparent optimize-render">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between">
-                                            <div class="flex items-center">
-                            <div class="flex items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent/80 p-2 icon-fluid-md">
+                                            <div class="flex items-center gap-0">
+                            <button id="header-logo-reload" class="flex items-center justify-center rounded-lg bg-gradient-to-br from-accent to-accent/80 p-2 icon-fluid-md border-none cursor-pointer" aria-label="Reload Palettinum application" title="Click to reload the application">
                                 <img src="assets/logo_light.png" alt="Palettinum Logo" class="object-contain logo-light icon-fluid-md" width="24" height="24" onerror="this.style.display='none'">
                                 <img src="assets/logo_dark.png" alt="Palettinum Logo" class="object-contain logo-dark hidden icon-fluid-md" width="24" height="24" onerror="this.style.display='none'">
-                            </div>
+                            </button>
                             <div class="flex flex-col">
                                 <h1 class="text-fluid-2xl font-bold text-primary">Palettinum</h1>
                             </div>
@@ -136,10 +136,10 @@
                             </svg>
                         </button>
                         <button id="theme-toggle" class="p-2 rounded-lg accent-bg text-white btn-fluid focus-fluid active-fluid" aria-label="Toggle theme" title="Toggle light/dark theme">
-                            <svg id="theme-icon-light" class="icon-fluid-md" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <svg id="theme-icon-light" class="icon-fluid-md hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
-                            <svg id="theme-icon-dark" class="icon-fluid-md hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <svg id="theme-icon-dark" class="icon-fluid-md" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                             </svg>
                         </button>
@@ -624,13 +624,13 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="performance-polyfills.js?v=3.31"></script>
-    <script src="cache-manager.js?v=3.31"></script>
-    <script src="state-manager.js?v=3.31"></script>
-    <script src="performance-monitor.js?v=3.31"></script>
-    <script src="responsive-panel-controller.js?v=3.31"></script>
+    <script src="performance-polyfills.js?v=3.37"></script>
+    <script src="cache-manager.js?v=3.37"></script>
+    <script src="state-manager.js?v=3.37"></script>
+    <script src="performance-monitor.js?v=3.37"></script>
+    <script src="responsive-panel-controller.js?v=3.37"></script>
 
-    <script src="PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.31"></script>
-    <script type="module" src="main.js?v=3.31"></script>
+    <script src="PALETTENIFFER_PLATFORM_NAVIGATION.js?v=3.37"></script>
+    <script type="module" src="main.js?v=3.37"></script>
 </body>
 </html>

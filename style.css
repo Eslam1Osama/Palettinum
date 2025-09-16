@@ -2521,27 +2521,43 @@ header .flex.items-center.justify-between {
 }
 
 /* Logo container responsive optimizations */
-header .flex.items-center.space-x-3 {
+header .flex.items-center.space-x-3,
+header .flex.items-center.gap-0 {
     flex: 1 1 auto;
     min-width: 0;
     align-items: center;
-    gap: 0;
+    gap: 0 !important;
 }
 
-/* Logo image responsive sizing */
-header .bg-gradient-to-br {
+/* Logo button responsive sizing and styling */
+header .bg-gradient-to-br,
+header #header-logo-reload {
     flex-shrink: 0;
     min-width: 40px;
     min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
+    background: linear-gradient(135deg, var(--accent) 0%, rgba(61, 189, 245, 0.8) 100%);
+    cursor: pointer;
+    outline: none;
 }
 
-header .bg-gradient-to-br img {
+/* Remove all focus and active effects */
+header #header-logo-reload:focus,
+header #header-logo-reload:focus-visible,
+header #header-logo-reload:active {
+    outline: none;
+    transform: none;
+}
+
+header .bg-gradient-to-br img,
+header #header-logo-reload img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    pointer-events: none;
 }
 
 /* Title responsive typography */
@@ -2612,6 +2628,15 @@ header .nav-right {
         padding: 0.75rem;
     }
     
+    /* Light theme header adjustments - matching dark theme responsiveness */
+    .light-theme header h1 {
+        font-size: 1.125rem;
+    }
+    
+    .light-theme header button {
+        padding: 0.75rem;
+    }
+    
     /* Tablet optimizations */
     header {
         height: 60px; /* Tablet-optimized height */
@@ -2624,11 +2649,13 @@ header .nav-right {
         gap: 0.75rem;
     }
     
-    header .flex.items-center.space-x-3 {
-        gap: 0;
+    header .flex.items-center.space-x-3,
+    header .flex.items-center.gap-0 {
+        gap: 0 !important;
     }
     
-    header .bg-gradient-to-br {
+    header .bg-gradient-to-br,
+    header #header-logo-reload {
         min-width: 36px;
         min-height: 36px;
         padding: 0.5rem;
@@ -2652,8 +2679,9 @@ header .nav-right {
         gap: 0.5rem;
     }
     
-    header .flex.items-center.space-x-3 {
-        gap: 0;
+    header .flex.items-center.space-x-3,
+    header .flex.items-center.gap-0 {
+        gap: 0 !important;
         flex: 1 1 auto;
         min-width: 0;
     }
@@ -2663,7 +2691,8 @@ header .nav-right {
         max-width: 120px;
     }
     
-    header .bg-gradient-to-br {
+    header .bg-gradient-to-br,
+    header #header-logo-reload {
         min-width: 32px;
         min-height: 32px;
         padding: 0.375rem;
@@ -2683,6 +2712,15 @@ header .nav-right {
     .dark-theme header button {
         padding: 0.75rem;
     }
+    
+    /* Light theme mobile adjustments - matching dark theme responsiveness */
+    .light-theme header h1 {
+        font-size: 1rem;
+    }
+    
+    .light-theme header button {
+        padding: 0.75rem;
+    }
 }
 
 /* Small mobile optimizations */
@@ -2698,8 +2736,9 @@ header .nav-right {
         gap: 0.375rem;
     }
     
-    header .flex.items-center.space-x-3 {
-        gap: 0;
+    header .flex.items-center.space-x-3,
+    header .flex.items-center.gap-0 {
+        gap: 0 !important;
     }
     
     header h1 {
@@ -2707,7 +2746,8 @@ header .nav-right {
         max-width: 100px;
     }
     
-    header .bg-gradient-to-br {
+    header .bg-gradient-to-br,
+    header #header-logo-reload {
         min-width: 28px;
         min-height: 28px;
         padding: 0.25rem;
@@ -2727,12 +2767,22 @@ header .nav-right {
     .dark-theme header button {
         padding: 0.625rem;
     }
+    
+    /* Light theme small mobile adjustments - matching dark theme responsiveness */
+    .light-theme header h1 {
+        font-size: 0.875rem;
+    }
+    
+    .light-theme header button {
+        padding: 0.625rem;
+    }
 }
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-    header .flex.items-center.space-x-3 {
-        gap: 0;
+    header .flex.items-center.space-x-3,
+    header .flex.items-center.gap-0 {
+        gap: 0 !important;
     }
     
     header #theme-toggle {
@@ -2741,7 +2791,8 @@ header .nav-right {
         padding: 0.875rem;
     }
     
-    header .bg-gradient-to-br {
+    header .bg-gradient-to-br,
+    header #header-logo-reload {
         min-width: 44px;
         min-height: 44px;
         padding: 0.5rem;
@@ -2761,6 +2812,10 @@ header .nav-right {
     header h1 {
         color: var(--text-primary);
         text-shadow: none;
+        background: none;
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+        background-clip: unset;
     }
     
     header #theme-toggle {
@@ -2803,7 +2858,8 @@ header .nav-right {
         max-width: 100px;
     }
     
-    header .bg-gradient-to-br {
+    header .bg-gradient-to-br,
+    header #header-logo-reload {
         min-width: 28px;
         min-height: 28px;
         padding: 0.25rem;
@@ -2854,9 +2910,13 @@ header .nav-right {
 }
 
 .light-theme header h1 {
-    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-weight: 700;
     letter-spacing: -0.01em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .light-theme header p {
@@ -4002,15 +4062,31 @@ header .flex.items-center.justify-center.rounded-lg.bg-gradient-to-br.from-accen
         0 1px 4px rgba(1, 4, 9, 0.1);
 }
 
-/* Theme toggle button icons - Permanent Gold color styling */
+/* Theme toggle button icons - Permanent Gold color styling with smooth transitions */
 #theme-toggle svg {
     color: #FFD700 !important; /* Beautiful gold color */
     filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    opacity: 1;
+    transform: scale(1);
 }
 
 .dark-theme #theme-toggle svg {
     color: #FFD700 !important; /* Gold color in dark mode */
     filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Icon fade animations for smooth theme switching */
+#theme-toggle svg.hidden {
+    opacity: 0 !important;
+    transform: scale(0.8) !important;
+    pointer-events: none;
+}
+
+#theme-toggle svg:not(.hidden) {
+    opacity: 1 !important;
+    transform: scale(1) !important;
 }
 
 
